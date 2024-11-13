@@ -1,4 +1,6 @@
-﻿namespace Universidade.Models
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+
+namespace Universidade.Models
 {
 	public class Disciplina
 	{
@@ -6,11 +8,17 @@
 		public string Nome { get; set; }
 		public string Descricao { get; set; }
 		public bool Ativo { get; set; }
-		public int ProfessorId { get; set; }
+		public DateTime DataRegistro { get; set; }
 
+		public int ProfessorId { get; set; }
 		public int AlunoId { get; set; }
 
 		public Aluno? Aluno { get; set; }
         public Professor? Professor { get; set; }
+
+        public Disciplina()
+        {
+            DataRegistro = DateTime.Now;
+        }
     }
 }

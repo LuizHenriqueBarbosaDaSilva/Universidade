@@ -10,23 +10,23 @@ using Universidade.Models;
 
 namespace Universidade.Controllers
 {
-    public class DisciplinasController : Controller
+    public class DisciplinaController : Controller
     {
         private readonly UniversidadeContext _context;
 
-        public DisciplinasController(UniversidadeContext context)
+        public DisciplinaController(UniversidadeContext context)
         {
             _context = context;
         }
 
-        // GET: Disciplinas
+        // GET: Disciplina
         public async Task<IActionResult> Index()
         {
             var universidadeContext = _context.Disciplinas.Include(d => d.Aluno).Include(d => d.Professor);
             return View(await universidadeContext.ToListAsync());
         }
 
-        // GET: Disciplinas/Details/5
+        // GET: Disciplina/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,7 +46,7 @@ namespace Universidade.Controllers
             return View(disciplina);
         }
 
-        // GET: Disciplinas/Create
+        // GET: Disciplina/Create
         public IActionResult Create()
         {
             ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id");
@@ -54,12 +54,12 @@ namespace Universidade.Controllers
             return View();
         }
 
-        // POST: Disciplinas/Create
+        // POST: Disciplina/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,Ativo,ProfessorId,AlunoId")] Disciplina disciplina)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId,AlunoId")] Disciplina disciplina)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace Universidade.Controllers
             return View(disciplina);
         }
 
-        // GET: Disciplinas/Edit/5
+        // GET: Disciplina/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,12 +90,12 @@ namespace Universidade.Controllers
             return View(disciplina);
         }
 
-        // POST: Disciplinas/Edit/5
+        // POST: Disciplina/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Ativo,ProfessorId,AlunoId")] Disciplina disciplina)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId,AlunoId")] Disciplina disciplina)
         {
             if (id != disciplina.Id)
             {
@@ -127,7 +127,7 @@ namespace Universidade.Controllers
             return View(disciplina);
         }
 
-        // GET: Disciplinas/Delete/5
+        // GET: Disciplina/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -147,7 +147,7 @@ namespace Universidade.Controllers
             return View(disciplina);
         }
 
-        // POST: Disciplinas/Delete/5
+        // POST: Disciplina/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

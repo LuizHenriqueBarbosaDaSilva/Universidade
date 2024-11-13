@@ -22,6 +22,9 @@
                 @Html.DisplayNameFor(model => model.Ativo)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.DataRegistro)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Aluno)
             </th>
             <th>
@@ -41,6 +44,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataRegistro)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Aluno.Id)
