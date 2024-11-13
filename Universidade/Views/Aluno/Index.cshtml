@@ -1,47 +1,69 @@
 ﻿@model IEnumerable<Universidade.Models.Aluno>
 
 @{
-    ViewData["Title"] = "Index";
+	ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+	<a asp-action="Create">Create New</a>
 </p>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Matricula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Matricula)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Nome)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Matricula)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Data)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Disciplinas)
+				listadas
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Nome)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Matricula)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Data)
+				</td>
+				<td>
+					@if (item.Disciplinas != null && item.Disciplinas.Any())
+					{
+						@foreach (var disciplina in item.Disciplinas)
+						{
+							<label>
+								@Html.DisplayFor(model => disciplina.Nome) -
+								Professor: @Html.DisplayFor(model => disciplina.Professor.Nome)
+							</label>
+							<br />
+						}
+					}
+					else
+					{
+						<p>Este aluno não está inscrito em nenhuma disciplina.</p>
+					}
+				</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+					<a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+					<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>

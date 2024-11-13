@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Universidade.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initialV01 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -50,18 +52,12 @@ namespace Universidade.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    ProfessorId = table.Column<int>(type: "int", nullable: false),
-                    AlunoId = table.Column<int>(type: "int", nullable: false)
+                    DataRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProfessorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Disciplinas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Disciplinas_Alunos_AlunoId",
-                        column: x => x.AlunoId,
-                        principalTable: "Alunos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Disciplinas_Professores_ProfessorId",
                         column: x => x.ProfessorId,
@@ -70,11 +66,66 @@ namespace Universidade.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Disciplinas_AlunoId",
+            migrationBuilder.CreateTable(
+                name: "AlunoDisciplina",
+                columns: table => new
+                {
+                    AlunosId = table.Column<int>(type: "int", nullable: false),
+                    DisciplinasId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlunoDisciplina", x => new { x.AlunosId, x.DisciplinasId });
+                    table.ForeignKey(
+                        name: "FK_AlunoDisciplina_Alunos_AlunosId",
+                        column: x => x.AlunosId,
+                        principalTable: "Alunos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlunoDisciplina_Disciplinas_DisciplinasId",
+                        column: x => x.DisciplinasId,
+                        principalTable: "Disciplinas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Alunos",
+                columns: new[] { "Id", "Data", "Matricula", "Nome" },
+                values: new object[,]
+                {
+                    { 1, new DateOnly(2, 10, 20), 2, "John Doe" },
+                    { 2, new DateOnly(3, 10, 20), 3, "Jane Doe" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Professores",
+                columns: new[] { "Id", "Data", "Matricula", "Nome" },
+                values: new object[] { 1, new DateOnly(1, 1, 1), 1, "Jesus" });
+
+            migrationBuilder.InsertData(
                 table: "Disciplinas",
-                column: "AlunoId",
-                unique: true);
+                columns: new[] { "Id", "Ativo", "DataRegistro", "Descricao", "Nome", "ProfessorId" },
+                values: new object[,]
+                {
+                    { 1, true, new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1903), "Traga as palavras", "Profeta", 1 },
+                    { 2, true, new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1905), "Testemunhe o mundo", "Testemunha", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AlunoDisciplina",
+                columns: new[] { "AlunosId", "DisciplinasId" },
+                values: new object[,]
+                {
+                    { 1, 2 },
+                    { 2, 1 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AlunoDisciplina_DisciplinasId",
+                table: "AlunoDisciplina",
+                column: "DisciplinasId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Disciplinas_ProfessorId",
@@ -86,10 +137,13 @@ namespace Universidade.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Disciplinas");
+                name: "AlunoDisciplina");
 
             migrationBuilder.DropTable(
                 name: "Alunos");
+
+            migrationBuilder.DropTable(
+                name: "Disciplinas");
 
             migrationBuilder.DropTable(
                 name: "Professores");

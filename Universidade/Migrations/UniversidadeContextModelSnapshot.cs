@@ -17,10 +17,37 @@ namespace Universidade.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AlunoDisciplina", b =>
+                {
+                    b.Property<int>("AlunosId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DisciplinasId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AlunosId", "DisciplinasId");
+
+                    b.HasIndex("DisciplinasId");
+
+                    b.ToTable("AlunoDisciplina");
+
+                    b.HasData(
+                        new
+                        {
+                            AlunosId = 2,
+                            DisciplinasId = 1
+                        },
+                        new
+                        {
+                            AlunosId = 1,
+                            DisciplinasId = 2
+                        });
+                });
 
             modelBuilder.Entity("Universidade.Models.Aluno", b =>
                 {
@@ -43,6 +70,22 @@ namespace Universidade.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Alunos");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Data = new DateOnly(2, 10, 20),
+                            Matricula = 2,
+                            Nome = "John Doe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Data = new DateOnly(3, 10, 20),
+                            Matricula = 3,
+                            Nome = "Jane Doe"
+                        });
                 });
 
             modelBuilder.Entity("Universidade.Models.Disciplina", b =>
@@ -53,11 +96,11 @@ namespace Universidade.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AlunoId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataRegistro")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .IsRequired()
@@ -72,12 +115,29 @@ namespace Universidade.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AlunoId")
-                        .IsUnique();
-
                     b.HasIndex("ProfessorId");
 
                     b.ToTable("Disciplinas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Ativo = true,
+                            DataRegistro = new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1903),
+                            Descricao = "Traga as palavras",
+                            Nome = "Profeta",
+                            ProfessorId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Ativo = true,
+                            DataRegistro = new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1905),
+                            Descricao = "Testemunhe o mundo",
+                            Nome = "Testemunha",
+                            ProfessorId = 1
+                        });
                 });
 
             modelBuilder.Entity("Universidade.Models.Professor", b =>
@@ -101,30 +161,41 @@ namespace Universidade.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Professores");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Data = new DateOnly(1, 1, 1),
+                            Matricula = 1,
+                            Nome = "Jesus"
+                        });
+                });
+
+            modelBuilder.Entity("AlunoDisciplina", b =>
+                {
+                    b.HasOne("Universidade.Models.Aluno", null)
+                        .WithMany()
+                        .HasForeignKey("AlunosId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Universidade.Models.Disciplina", null)
+                        .WithMany()
+                        .HasForeignKey("DisciplinasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Universidade.Models.Disciplina", b =>
                 {
-                    b.HasOne("Universidade.Models.Aluno", "Aluno")
-                        .WithOne("Disciplina")
-                        .HasForeignKey("Universidade.Models.Disciplina", "AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Universidade.Models.Professor", "Professor")
                         .WithMany()
                         .HasForeignKey("ProfessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Aluno");
-
                     b.Navigation("Professor");
-                });
-
-            modelBuilder.Entity("Universidade.Models.Aluno", b =>
-                {
-                    b.Navigation("Disciplina");
                 });
 #pragma warning restore 612, 618
         }
