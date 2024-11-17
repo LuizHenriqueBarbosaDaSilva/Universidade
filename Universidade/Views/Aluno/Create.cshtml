@@ -34,8 +34,8 @@
                     @foreach (var disciplinaItens in ViewBag.Disciplinas)
                     {
                         <div class="form-check">
-                            <input type="checkbox" name="disciplinasSelecionadas" value="@disciplinaItens.Value" class="form-check-input" />
-                            <label class="form-check-label">@disciplinaItens.Text</label>
+                            <input type="checkbox" name="disciplinasSelecionadas" value="@disciplinaItens.Id" class="form-check-input" />
+                            <label class="form-check-label">@disciplinaItens.Nome</label>
                         </div>
                     }
                 }
