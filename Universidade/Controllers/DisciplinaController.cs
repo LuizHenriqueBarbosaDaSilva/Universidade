@@ -34,9 +34,7 @@ namespace Universidade.Controllers
                 return NotFound();
             }
 
-            var disciplina = await _context.Disciplinas
-                .Include(d => d.Professor)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var disciplina = await _context.Disciplinas.Include(p => p.Professor).Include(a => a.Alunos).FirstOrDefaultAsync(d => d.Id == id);
             if (disciplina == null)
             {
                 return NotFound();
