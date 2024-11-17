@@ -22,7 +22,7 @@ namespace Universidade.Controllers
         // GET: Disciplina
         public async Task<IActionResult> Index()
         {
-            var universidadeContext = _context.Disciplinas.Include(d => d.Aluno).Include(d => d.Professor);
+            var universidadeContext = _context.Disciplinas.Include(d => d.Alunos).Include(d => d.Professor);
             return View(await universidadeContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace Universidade.Controllers
             }
 
             var disciplina = await _context.Disciplinas
-                .Include(d => d.Aluno)
+                .Include(d => d.Alunos)
                 .Include(d => d.Professor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (disciplina == null)
@@ -49,8 +49,7 @@ namespace Universidade.Controllers
         // GET: Disciplina/Create
         public IActionResult Create()
         {
-            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id");
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id");
+            ViewData["Professor"] = new SelectList(_context.Professores, "Id", "Nome");
             return View();
         }
 
@@ -67,8 +66,7 @@ namespace Universidade.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
+            ViewData["Professor"] = new SelectList(_context.Professores, "Id", "Nome");
             return View(disciplina);
         }
 
@@ -85,8 +83,8 @@ namespace Universidade.Controllers
             {
                 return NotFound();
             }
-            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
+
+            ViewData["Professor"] = new SelectList(_context.Professores, "Id", "Nome");
             return View(disciplina);
         }
 
@@ -122,8 +120,7 @@ namespace Universidade.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
+            ViewData["Professor"] = new SelectList(_context.Professores, "Id", "Nome");
             return View(disciplina);
         }
 
@@ -136,7 +133,7 @@ namespace Universidade.Controllers
             }
 
             var disciplina = await _context.Disciplinas
-                .Include(d => d.Aluno)
+                .Include(d => d.Alunos)
                 .Include(d => d.Professor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (disciplina == null)

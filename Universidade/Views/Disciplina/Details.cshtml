@@ -10,42 +10,48 @@
     <h4>Disciplina</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Nome)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Nome)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Descricao)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Descricao)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Ativo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ativo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DataRegistro)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DataRegistro)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Aluno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Aluno.Id)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Professor)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Professor.Id)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Professor.Nome)
         </dd>
+        <div>
+            <dt class="col-sm-10">Alunos com essa disciplina:</dt>
+            <ul>
+
+                @foreach (var alunosItens in Model.Alunos)
+                {
+                    <div>
+                        @alunosItens.Nome
+                    </div>
+                }
+            </ul>
+        </div>
     </dl>
 </div>
 <div>
