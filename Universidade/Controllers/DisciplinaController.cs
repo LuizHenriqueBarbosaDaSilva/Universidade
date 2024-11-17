@@ -22,7 +22,7 @@ namespace Universidade.Controllers
         // GET: Disciplina
         public async Task<IActionResult> Index()
         {
-            var universidadeContext = _context.Disciplinas.Include(d => d.Professor);
+            var universidadeContext = _context.Disciplinas.Include(d => d.Aluno).Include(d => d.Professor);
             return View(await universidadeContext.ToListAsync());
         }
 
@@ -34,7 +34,10 @@ namespace Universidade.Controllers
                 return NotFound();
             }
 
-            var disciplina = await _context.Disciplinas.Include(p => p.Professor).Include(a => a.Alunos).FirstOrDefaultAsync(d => d.Id == id);
+            var disciplina = await _context.Disciplinas
+                .Include(d => d.Aluno)
+                .Include(d => d.Professor)
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (disciplina == null)
             {
                 return NotFound();
@@ -46,7 +49,8 @@ namespace Universidade.Controllers
         // GET: Disciplina/Create
         public IActionResult Create()
         {
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Nome");
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id");
+            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id");
             return View();
         }
 
@@ -55,7 +59,7 @@ namespace Universidade.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId")] Disciplina disciplina)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId,AlunoId")] Disciplina disciplina)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +67,8 @@ namespace Universidade.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Nome", disciplina.ProfessorId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
+            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
             return View(disciplina);
         }
 
@@ -80,7 +85,8 @@ namespace Universidade.Controllers
             {
                 return NotFound();
             }
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Nome", disciplina.ProfessorId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
+            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
             return View(disciplina);
         }
 
@@ -89,7 +95,7 @@ namespace Universidade.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId")] Disciplina disciplina)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Ativo,DataRegistro,ProfessorId,AlunoId")] Disciplina disciplina)
         {
             if (id != disciplina.Id)
             {
@@ -116,7 +122,8 @@ namespace Universidade.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Nome", disciplina.ProfessorId);
+            ViewData["AlunoId"] = new SelectList(_context.Alunos, "Id", "Id", disciplina.AlunoId);
+            ViewData["ProfessorId"] = new SelectList(_context.Professores, "Id", "Id", disciplina.ProfessorId);
             return View(disciplina);
         }
 
@@ -129,6 +136,7 @@ namespace Universidade.Controllers
             }
 
             var disciplina = await _context.Disciplinas
+                .Include(d => d.Aluno)
                 .Include(d => d.Professor)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (disciplina == null)
