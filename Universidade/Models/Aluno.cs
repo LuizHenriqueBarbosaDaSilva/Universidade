@@ -1,4 +1,6 @@
-﻿namespace Universidade.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Universidade.Models
 {
 	public class Aluno
 	{
@@ -9,7 +11,8 @@
 		public int Id { get; set; }
 		public string Nome { get; set; }
 		public int Matricula { get; set; }
-		public DateOnly Data { get; set; }
+        [Display(Name = "Data de efitivação")]
+        public DateOnly Data { get; set; }
 
         public List<Disciplina> Disciplinas { get; set; }
 

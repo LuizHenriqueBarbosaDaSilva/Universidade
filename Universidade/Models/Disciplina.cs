@@ -12,7 +12,7 @@ namespace Universidade.Models
 
         public bool Ativo { get; set; }
 
-        [Display(Name = "Data Registro")]
+        [Display(Name = "Data de registro")]
         public DateTime DataRegistro { get; set; }
 
         [Display(Name = "Nome do Professor")]
