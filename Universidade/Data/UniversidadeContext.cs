@@ -14,11 +14,12 @@ namespace Universidade.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Aluno>().HasData(
-                new Aluno { Id = 1, Nome = "John Doe", Matricula = 0000002, Data = DateOnly.Parse("20/10/0002")},
-                new Aluno { Id = 2, Nome = "Jane Doe", Matricula = 0000003, Data = DateOnly.Parse("20/10/0003")}
+                new Aluno { Id = 1, Nome = "Maria Lopes", Matricula = 202314593, Data = DateOnly.Parse("21/9/2023")},
+                new Aluno { Id = 2, Nome = "Joao Carlos", Matricula = 202314956, Data = DateOnly.Parse("22/10/2023")}
                 );
             modelBuilder.Entity<Professor>().HasData(
-                new Professor { Id = 1, Nome = "Jesus", Matricula = 0000001, Data = DateOnly.Parse("01/01/001") }
+                new Professor { Id = 1, Nome = "Jon Cleber", Matricula = 20231214, Data = DateOnly.Parse("20/01/2013") },
+                new Professor { Id = 1, Nome = "Leo John", Matricula = 20231215, Data = DateOnly.Parse("20/01/2013") }
                 );
 
             modelBuilder.Entity<Disciplina>().HasData(

@@ -146,7 +146,7 @@ namespace Universidade.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); 
         }
 
         private bool ProfessorExists(int id)

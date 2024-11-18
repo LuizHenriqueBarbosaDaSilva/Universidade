@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Universidade.Migrations
 {
     /// <inheritdoc />
-    public partial class initialV01 : Migration
+    public partial class initialV1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -109,8 +109,8 @@ namespace Universidade.Migrations
                 columns: new[] { "Id", "Ativo", "DataRegistro", "Descricao", "Nome", "ProfessorId" },
                 values: new object[,]
                 {
-                    { 1, true, new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1903), "Traga as palavras", "Profeta", 1 },
-                    { 2, true, new DateTime(2024, 11, 15, 22, 1, 32, 174, DateTimeKind.Local).AddTicks(1905), "Testemunhe o mundo", "Testemunha", 1 }
+                    { 1, true, new DateTime(2024, 11, 17, 18, 6, 34, 108, DateTimeKind.Local).AddTicks(9606), "Traga as palavras", "Profeta", 1 },
+                    { 2, true, new DateTime(2024, 11, 17, 18, 6, 34, 108, DateTimeKind.Local).AddTicks(9609), "Testemunhe o mundo", "Testemunha", 1 }
                 });
 
             migrationBuilder.InsertData(

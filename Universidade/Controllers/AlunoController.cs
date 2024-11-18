@@ -19,7 +19,7 @@ namespace Universidade.Controllers
             _context = context;
         }
 
-        // GET: Aluno
+        //Metodo -> GET: Aluno
         public async Task<IActionResult> Index()
         {
             var alunoContext = _context.Alunos.Include(a => a.Disciplinas).ThenInclude(d => d.Professor); // Inclui as disciplinas associadas ao aluno e os professores de cada disciplina
@@ -27,24 +27,24 @@ namespace Universidade.Controllers
             return View(await alunoContext.ToListAsync());
         }
 
-        // GET: Aluno/Details/5
+        //Metodo -> GET: Aluno/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null) 
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             var aluno = await _context.Alunos.Include(a => a.Disciplinas).ThenInclude(d => d.Professor).FirstOrDefaultAsync(a => a.Id == id);
             if (aluno == null)
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             return View(aluno);
         }
 
-        // GET: Aluno/Create
+        //Metodo -> GET: Aluno/Create
         [HttpGet("Aluno/Create")]
         public IActionResult Create()
         {
@@ -53,46 +53,43 @@ namespace Universidade.Controllers
             return View();
         }
 
-        // POST: Aluno/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Metodo -> POST: Aluno/Create
         [HttpPost("Aluno/Create/{id?}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Aluno aluno, int[] disciplinasSelecionadas)
+        public async Task<IActionResult> Create(Aluno aluno, int[] disciplinasItens)
         {
             if (ModelState.IsValid)
             {
-                // Adicionar o aluno
-                _context.Alunos.Add(aluno);
-                await _context.SaveChangesAsync();
+                _context.Alunos.Add(aluno); // Atualiza os Alunos no banco com as novas associações   
+                await _context.SaveChangesAsync(); // Espera para as mudanças estarem assincronas
 
                 // Associar as disciplinas selecionadas
-                if (disciplinasSelecionadas != null && disciplinasSelecionadas.Any())
+                if (disciplinasItens != null && disciplinasItens.Any()) 
                 {
                     var disciplinas = _context.Disciplinas
-                        .Where(d => disciplinasSelecionadas.Contains(d.Id))
-                        .ToList();
+                        .Where(d => disciplinasItens.Contains(d.Id))
+                        .ToList(); // Busca no context os conteudos de Disciplina nos Ids e faz uma lista
 
                     aluno.Disciplinas = disciplinas;
-                    _context.Update(aluno);
-                    await _context.SaveChangesAsync();
+                    _context.Update(aluno);            // Atualiza a lista nas disciplinas no banco com as novas associações    
+                    await _context.SaveChangesAsync(); // Espera para as mudanças estarem assincronas
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index)); // Redireciona para a página de listagem (Index)
             }
 
             ViewBag.Disciplinas = new SelectList(_context.Disciplinas, "Id", "Nome");
             return View(aluno); 
         }
 
-        // GET: Aluno/Edit/5
+        //Metodo -> GET: Aluno/Edit/5
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             // Se o ID não foi fornecido, retorna a página de erro 404 (NotFound)
             if (id == null)
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             // Carrega o aluno e as disciplinas associadas. Inclui a lista disciplinas para apresentar as disciplinas no front end alem de passar a PK do aluno
@@ -101,7 +98,7 @@ namespace Universidade.Controllers
             // Se o aluno não foi encontrado, retorna a página de erro 404 (NotFound)
             if (aluno == null)
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             // Prepara uma lista de todas as disciplinas, marcando quais estão associadas ao aluno
@@ -117,16 +114,14 @@ namespace Universidade.Controllers
             return View(aluno); // Retorna o aluno para ser exibido na View
         }
 
-        // POST: Aluno/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        //Metodo -> POST: Aluno/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Aluno aluno, int[] disciplinasSelecionadas)
         {
             if (id != aluno.Id) // Se o ID do aluno recebido não corresponde ao ID do formulário, retorna erro 404 (NotFound)
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             if (ModelState.IsValid) // Verifica se os dados do formulário são válidos
@@ -186,42 +181,43 @@ namespace Universidade.Controllers
             return View(aluno); // Retorna o aluno com os dados preenchidos
         }
 
-        // GET: Aluno/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        //Metodo -> GET: Aluno/Delete/5
+        public async Task<IActionResult> Delete(int? id) // O Delete recebe o Id do iten que voce quer deletar
         {
-            if (id == null)
+            if (id == null) // Verifica se o ID é nulo
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
             var aluno = await _context.Alunos
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (aluno == null)
+                .FirstOrDefaultAsync(a => a.Id == id); // Busca o aluno no contexto pelo ID fornecido
+            if (aluno == null) // Verifica se o aluno existe    
             {
-                return NotFound();
+                return NotFound(); // Retorna a pagina 404 (NotFound)
             }
 
-            return View(aluno);
+            return View(aluno); // Retorna a visão com os detalhes do aluno para confirmação
         }
 
-        // POST: Aluno/Delete/5
-        [HttpPost, ActionName("Delete")]
+        //Metodo -> POST: Aluno/Delete/5
+        [HttpPost, ActionName("Delete")] 
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id) // recebe o Id que foi desejado
         {
-            var aluno = await _context.Alunos.FindAsync(id);
-            if (aluno != null)
+            var aluno = await _context.Alunos.FindAsync(id); // Procura o aluno no contexto pelo ID
+            if (aluno != null) // Confere se o aluno não existe, se for diferente entra na condição
             {
-                _context.Alunos.Remove(aluno);
+                _context.Alunos.Remove(aluno); // Remove o registro do aluno do contexto
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await _context.SaveChangesAsync(); // Salva as mudanças no banco de dados
+            return RedirectToAction(nameof(Index)); // Redireciona para a página de listagem (Index)
         }
 
         private bool AlunoExists(int id)
         {
-            return _context.Alunos.Any(e => e.Id == id);
+            // Verifica se existe algum aluno no context cuja propriedade Id seja igual ao valor fornecido
+            return _context.Alunos.Any(e => e.Id == id); 
         }
     }
 }
