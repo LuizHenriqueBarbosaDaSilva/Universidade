@@ -1,45 +1,16 @@
-# Nome do Projeto
+# Universidade Paraiba do Sul
 
-> Uma breve descrição do projeto e seu propósito.
+> Gerenciamento remoto ou local a partir de banco de dados
+ 
+## Pré-requisitos & Instalações
 
-## Índice
+Antes de instalar o projeto, Siga essas instruções
+> Va na aba ferramentas, gerenciador de pacotes nuGet, clique em console gerenciador de pacotes.
+> Adcione a seguinte linha dentro do console Add-migration initalV1, em seguinte use esse comando Update-database. Agora esta pronto para ser usado!
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Uso](#uso)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
-- [Contato](#contato)
 
----
-
-## Sobre o Projeto
-
-Descreva aqui o propósito do projeto, os problemas que ele resolve ou os benefícios que ele oferece.
-
-### Funcionalidades
-
-- [x] Funcionalidade 1
-- [x] Funcionalidade 2
-- [x] Funcionalidade 3
-
----
-
-## Pré-requisitos
-
-Antes de instalar o projeto, certifique-se de que você tenha os seguintes programas instalados:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/) (ou qualquer outro software necessário)
-- Um editor de código como [VS Code](https://code.visualstudio.com/).
-
----
-
-## Instalação
-
-Siga estas etapas para instalar o projeto localmente:
-
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/SeuUsuario/NomeDoRepositorio.git
+# Developers
+> Luiz Henrique Barbosa da Silva, 2023121494
+> Weber Luna Monteiro, 2023121504
+> Gripp Valerio, 2023121539
+> Jorge Luiz Barbosa da Silva, 2023121496
