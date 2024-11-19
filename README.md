@@ -10,7 +10,7 @@ Antes de instalar o projeto, Siga essas instruções
 
 
 # Developers
-> Luiz Henrique Barbosa da Silva, 2023121494.
-> Weber Luna Monteiro, 2023121504.
-> Gripp Valerio, 2023121539.
-> Jorge Luiz Barbosa da Silva, 2023121496.
+Luiz Henrique Barbosa da Silva, 2023121494.
+Weber Luna Monteiro, 2023121504.
+Gripp Valerio, 2023121539.
+Jorge Luiz Barbosa da Silva, 2023121496.
