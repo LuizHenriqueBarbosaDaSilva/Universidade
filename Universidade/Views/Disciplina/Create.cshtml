@@ -5,7 +5,7 @@
 }
 
 <h1>Create</h1>
-
+<br />
 <h4>Disciplina</h4>
 <hr />
 <div class="row">
@@ -24,7 +24,7 @@
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+                    <input class="form-check-input" asp-for="Ativo" />A disciplina esta ativa?
                 </label>
             </div>
             <div class="form-group">
@@ -32,14 +32,12 @@
                 <select asp-for="ProfessorId" class ="form-control" asp-items="ViewBag.Professor"></select>
             </div>
             <div class="form-group">
+                <br />
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

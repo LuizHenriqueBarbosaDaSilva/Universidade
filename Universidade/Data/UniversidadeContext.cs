@@ -19,7 +19,7 @@ namespace Universidade.Data
                 );
             modelBuilder.Entity<Professor>().HasData(
                 new Professor { Id = 1, Nome = "Jon Cleber", Matricula = 20231214, Data = DateOnly.Parse("20/01/2013") },
-                new Professor { Id = 1, Nome = "Leo John", Matricula = 20231215, Data = DateOnly.Parse("20/01/2013") }
+                new Professor { Id = 2, Nome = "Leo John", Matricula = 20231215, Data = DateOnly.Parse("20/01/2013") }
                 );
 
             modelBuilder.Entity<Disciplina>().HasData(

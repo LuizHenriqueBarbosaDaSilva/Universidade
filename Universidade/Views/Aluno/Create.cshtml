@@ -5,7 +5,7 @@
 }
 
 <h1>Create</h1>
-
+<br />
 <h4>Aluno</h4>
 <hr />
 <div class="row">
@@ -47,15 +47,13 @@
 
             <div class="form-group">
                 <br />
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
